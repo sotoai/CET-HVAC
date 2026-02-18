@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CET — AI HVAC Tutor</title>
+  <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Login Screen -->
+  <div class="login-screen active" id="loginScreen"></div>
+
+  <!-- Mobile Header -->
+  <div class="mobile-header" id="mobileHeader">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+      <i data-lucide="menu" width="20" height="20"></i>
+    </button>
+    <div class="mobile-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="20" height="20" style="vertical-align: -3px; margin-right: 6px;"><path d="M24 6 L38 26 L31 26 L24 15 L17 26 L10 26 Z" fill="#00d4ff"/><rect x="13" y="31" width="22" height="3" rx="1.5" fill="#00d4ff" opacity="0.4"/><rect x="17" y="37" width="14" height="2.2" rx="1.1" fill="#00d4ff" opacity="0.18"/></svg>CET
+    </div>
+    <div style="width: 36px;"></div>
+  </div>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsOverlay" onclick="closeSettings(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title">Settings</div>
+        <button class="modal-close" onclick="closeSettings()">
+          <i data-lucide="x" width="18" height="18"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="setting-group">
+          <label class="setting-label">OpenAI API Key</label>
+          <div class="setting-description">Your key is stored locally in this browser and never sent anywhere except OpenAI.</div>
+          <div class="setting-input-row">
+            <input type="password" class="setting-input" id="settingApiKey" placeholder="sk-..." autocomplete="off" spellcheck="false">
+            <button class="setting-toggle-vis" onclick="toggleKeyVisibility()" title="Show/hide key">
+              <i data-lucide="eye" width="16" height="16" id="keyVisIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label">Model</label>
+          <select class="setting-select" id="settingModel">
+            <option value="gpt-5.2">GPT-5.2</option>
+            <option value="gpt-5">GPT-5</option>
+            <option value="gpt-5-mini">GPT-5 Mini</option>
+            <option value="gpt-5-nano">GPT-5 Nano</option>
+            <option value="gpt-4.1">GPT-4.1</option>
+            <option value="gpt-4.1-mini">GPT-4.1 Mini</option>
+            <option value="gpt-4o">GPT-4o</option>
+          </select>
+        </div>
+
+        <div class="setting-group">
+          <label class="setting-label">TTS Voice</label>
+          <div class="setting-description">Voice used for spoken responses in Voice mode.</div>
+          <div class="setting-voices" id="settingVoices">
+            <button class="voice-option" data-voice="nova" onclick="selectVoice('nova')">
+              <span class="voice-option-name">Nova</span>
+              <span class="voice-option-desc">Warm, natural</span>
+            </button>
+            <button class="voice-option" data-voice="alloy" onclick="selectVoice('alloy')">
+              <span class="voice-option-name">Alloy</span>
+              <span class="voice-option-desc">Neutral, clear</span>
+            </button>
+            <button class="voice-option" data-voice="echo" onclick="selectVoice('echo')">
+              <span class="voice-option-name">Echo</span>
+              <span class="voice-option-desc">Deep, steady</span>
+            </button>
+            <button class="voice-option" data-voice="onyx" onclick="selectVoice('onyx')">
+              <span class="voice-option-name">Onyx</span>
+              <span class="voice-option-desc">Rich, resonant</span>
+            </button>
+            <button class="voice-option" data-voice="shimmer" onclick="selectVoice('shimmer')">
+              <span class="voice-option-name">Shimmer</span>
+              <span class="voice-option-desc">Bright, expressive</span>
+            </button>
+            <button class="voice-option" data-voice="fable" onclick="selectVoice('fable')">
+              <span class="voice-option-name">Fable</span>
+              <span class="voice-option-desc">Narrative, smooth</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <button class="setting-test-btn" id="settingTestBtn" onclick="testApiConnection()">
+            <i data-lucide="wifi" width="14" height="14"></i>
+            <span>Test Connection</span>
+          </button>
+          <div class="setting-test-result" id="settingTestResult"></div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn-secondary" onclick="closeSettings()">Cancel</button>
+        <button class="modal-btn-primary" onclick="saveSettings()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app" id="app">
+
+    <!-- Sidebar (rendered dynamically by renderSidebar) -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <!-- Main Content (view containers generated dynamically by setupPortal) -->
+    <main class="main" id="mainContent"></main>
+
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/openai.js"></script>
+  <script src="js/components.js"></script>
+  <script src="js/teacher.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
