@@ -7,6 +7,8 @@ function renderAdminDashboard() {
   const user = CURRENT_USER;
 
   return `
+    ${demoBanner('admin')}
+
     <div class="greeting">
       <h1>Welcome back, ${user.firstName}</h1>
       <div class="greeting-date">${dateStr}</div>

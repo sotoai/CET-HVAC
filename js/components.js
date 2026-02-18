@@ -12,6 +12,21 @@ function cetLogoMark(size = 48) {
     </svg>`;
 }
 
+// ── Demo Banner ──
+
+function demoBanner(context) {
+  const messages = {
+    student: 'Student view with simulated data. The AI Tutor is live — all other features are static demos.',
+    teacher: 'Instructor view with simulated roster and assignments. Actions are non-functional in this demo.',
+    admin: 'Admin view with simulated program data. Reports and actions are non-functional in this demo.'
+  };
+  return `
+    <div class="demo-banner">
+      <i data-lucide="info" width="14" height="14"></i>
+      <span><strong>Demo Mode</strong> — ${messages[context] || messages.student}</span>
+    </div>`;
+}
+
 // ── SVG Technical Diagrams ──
 
 function getDiagramSvg(id) {
@@ -311,13 +326,21 @@ function renderLogin() {
           <div class="login-subtitle">AI-Powered HVAC Training Platform</div>
         </div>
 
+        <div class="demo-notice">
+          <div class="demo-notice-badge">DEMO</div>
+          <div class="demo-notice-text">
+            This is a <strong>concept demo</strong> to align on product vision and direction.<br>
+            All data is simulated. Core functionality is limited.
+          </div>
+        </div>
+
         <div class="login-roles">
           <button class="role-card" onclick="login('student')">
             <div class="role-card-icon">
               <i data-lucide="graduation-cap" width="28" height="28"></i>
             </div>
             <div class="role-card-label">Student</div>
-            <div class="role-card-desc">Access your courses, AI tutor, and progress tracking</div>
+            <div class="role-card-desc">Courses, AI tutor, and progress tracking</div>
             <div class="role-card-demo">Demo: Jorge Arellano</div>
           </button>
 
@@ -326,7 +349,7 @@ function renderLogin() {
               <i data-lucide="book-open" width="28" height="28"></i>
             </div>
             <div class="role-card-label">Instructor</div>
-            <div class="role-card-desc">Manage students, assignments, and communications</div>
+            <div class="role-card-desc">Student management, assignments, and messaging</div>
             <div class="role-card-demo">Demo: Maria Santos</div>
           </button>
 
@@ -426,6 +449,7 @@ function renderSidebar(role) {
       <div class="sidebar-brand">
         ${cetLogoMark(28)}
         <div class="sidebar-logo">CET</div>
+        <span class="sidebar-demo-badge">DEMO</span>
       </div>
       <div class="sidebar-tagline">Center for Employment Training</div>
     </div>
@@ -511,6 +535,8 @@ function renderDashboard() {
   const progressOffset = circumference - (currentPhase.progress / 100) * circumference;
 
   return `
+    ${demoBanner('student')}
+
     <div class="greeting">
       <h1>Welcome back, ${STUDENT.firstName}</h1>
       <div class="greeting-date">${dateStr}</div>

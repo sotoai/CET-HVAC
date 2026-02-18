@@ -9,6 +9,8 @@ function renderTeacherDashboard() {
   const overdue = TEACHER_TASKS.filter(t => t.status === 'overdue').length;
 
   return `
+    ${demoBanner('teacher')}
+
     <div class="greeting">
       <h1>Welcome back, ${user.firstName}</h1>
       <div class="greeting-date">${dateStr}</div>
