@@ -713,6 +713,14 @@ function escapeHtml(text) {
 // ── Initialize ──
 
 function init() {
+  // Auto-configure API key from URL parameter, then clean the URL
+  const params = new URLSearchParams(window.location.search);
+  const urlKey = params.get('key');
+  if (urlKey) {
+    vertexAI.saveSettings({ apiKey: urlKey });
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+
   // Render login screen
   const loginScreen = document.getElementById('loginScreen');
   loginScreen.innerHTML = renderLogin();
